@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DataWarehouse</title>
+    <link rel="stylesheet" href="/front-end/css/dist/css/custom.css">
+    <link rel="shortcut icon" type="image/png" href="/front-end/html/img/logo-w.png">
+</head>
+
+<body>
+
+    <script>
+        if (sessionStorage.token == null) {
+            window.location.href = './index.html';
+        }
+    </script>
+    
+    <nav class="navbar navbar-expand navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand p-2" href="#">
+                <img src="/front-end/html/img/logo-w.png" width="45" height="45" alt="" loading="lazy">
+            </a>
+
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-link" href="/front-end/html/contacts.html">Contactos</a>
+                    <a class="nav-link" href="/front-end/html/companies.html">Compañias</a>
+                    <a class="nav-link active" aria-current="page" href="/front-end/html/users.html" id="userHeaderBtn">Usuarios</a>
+                    <a class="nav-link" href="/front-end/html/city-region.html">Región/Ciudad</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <script>
+        if (sessionStorage.role != 'admin') {
+            userHeaderBtn.style.display = 'none';
+        }
+    </script>
+
+    <div class="container col-6 border p-3 mt-4">
+        <h3 class="text-center">Editar usuario</h3>
+        <form id="editUserForm">
+            <div class="form-group p-2">
+                <label for="create-username">Nombre de Usuario</label>
+                <input type="text" class="form-control" id="create-username" name="username" required>
+            </div>
+            <div class="form-group p-2">
+                <label for="create-name">Nombre y Apellido</label>
+                <input type="text" class="form-control" id="create-name" name="name" required> 
+            </div>
+            <div class="form-group p-2">
+                <label for="create-email">E-Mail</label>
+                <input type="text" class="form-control" id="create-email" name="email" required>
+            </div>
+            <div class="form-group p-2">
+                <label>Perfil</label>
+                
+                    <div class="radio form-control d-flex flex-row justify-content-around" id="create-role">
+                        <label><input class="m-2" type="radio" name="optradio" value="admin" checked>Admin</label>
+                        <label><input class="m-2" type="radio" name="optradio" value="user" id="checkUser">User</label>
+                    </div>
+                
+            </div>
+            <div class="form-group p-2">
+                <label for="create-password">Nueva contaseña</label>
+                <input type="text" class="form-control" id="create-password" name="password" required>
+            </div>
+            <div class="form-group p-2">
+                <label for="create-repeatPassword">Repetir nueva contraseña</label>
+                <input type="text" class="form-control" id="create-repeatPassword" name="repeatPassword" required>
+            </div>
+
+            <div class="d-grid justify-content-end">
+                <button type="submit" class="btn btn-primary m-2 justify-content-end">Editar</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="/front-end/css/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="/front-end/js/edit-user.js"></script>
+</body>
+
+</html>
