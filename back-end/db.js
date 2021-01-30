@@ -11,7 +11,8 @@ const UserModel = require('./models/user');
 const RegionModel = require('./models/region');
 const CountryModel = require('./models/country');
 const CityModel = require('./models/city');
-
+const CompanyModel = require('./models/company');
+const city = require('./models/city');
 
 // CONECTING TO DB //
 const sequelize = new Sequelize(SQL_DATABASE, SQL_USER, SQL_PASS, {
@@ -24,6 +25,7 @@ const User = UserModel(sequelize, Sequelize);
 const Region = RegionModel(sequelize, Sequelize);
 const Country = CountryModel(sequelize, Sequelize);
 const City = CityModel(sequelize, Sequelize);
+const Company = CompanyModel(sequelize, Sequelize);
 
 // TABLES ASSOCIATIONS //
 Region.hasMany(Country, {
@@ -46,6 +48,36 @@ Country.hasMany(City, {
     onUpdate: 'CASCADE'
 });
 
+City.hasOne(Country, {
+    foreignKey: {
+        name: 'country_id',
+        allowNull: false
+    },
+    sourceKey: 'country_id',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
+});
+
+City.hasMany(Company, {
+    foreignKey: {
+        name: 'city_id',
+        allowNull: false
+    },
+    sourceKey: 'city_id',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
+});
+
+Company.hasOne(City, {
+    foreignKey: {
+        name: 'city_id',
+        allowNull: false
+    },
+    sourceKey: 'city_id',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
+});
+
 // SYNC DB //
 // sequelize.sync({ force: true })
 //     .then(() => {
@@ -57,5 +89,6 @@ module.exports = {
     User,
     Region,
     Country,
-    City
+    City,
+    Company
 }

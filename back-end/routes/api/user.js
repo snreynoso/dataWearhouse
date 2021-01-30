@@ -1,6 +1,6 @@
 require('dotenv').config();
 const router = require('express').Router();
-const { Region, Country, City } = require('../../db');
+const { Region, Country, City, Company } = require('../../db');
 const { user_validation, authenticate_token } = require('./middlewares');
 const jwt = require('jsonwebtoken');
 const { Op } = require("sequelize");
@@ -101,7 +101,6 @@ router.get('/get-list', async (req, res) => {
         console.log('Error: ', e.parent.sqlMessage);
         res.status(409).send('DB Failed');//, e);
     }
-
 });
 
 router.delete('/delete-region', async (req, res) => {
@@ -205,4 +204,96 @@ router.post('/edit-city', async (req, res) => {
         res.status(409).send('DB Failed');//, e);
     }
 });
+
+router.post('/create-company', async (req, res) => {
+    try {
+        let company = new Object;
+        company.name = req.body.name;
+        company.address = req.body.address;
+        company.email = req.body.email;
+        company.phone = req.body.phone;
+        company.city_id = req.body.city_id;
+
+        console.log(company);
+
+        await Company.create(company);
+
+        res.status(201).json({
+            status: 201,
+            msg: 'New company created!'
+        });
+    } catch (e) { // username: [unique: true] email: [unique: true]
+        console.log('Error: ', e.errors[0].message);
+
+    //     if (e.errors[0].type == 'unique violation') {
+    //         res.status(401).json({
+    //             status: 401,
+    //             msg: e.errors[0].message
+    //         });
+    //     } else {
+    //         res.status(409).json({
+    //             status: 409,
+    //             msg: 'Username or email has already exist',
+    //             error: e
+    //         });
+    //     }
+    }
+});
+
+router.post('/companies-list', async (req, res) => {
+    try {
+        const get_companies_list = await Company.findAll({
+            include: [
+                {
+                    model: City,
+                    attributes: ['city'],
+                    include: {
+                        model: Country,
+                        attributes: ['country'],
+                    } 
+                }
+            ]
+        });
+        res.status(200).json({
+            status: 200,
+            msg: 'Company list',
+            list: get_companies_list
+        });
+    } catch (e) {
+        console.log('Error: ', e.parent.sqlMessage);
+        res.status(409).send('DB Failed');//, e);
+    }
+});
+
+router.delete('/delete-company', async (req, res) => {
+    try {
+        await Company.destroy({
+            where: { company_id: { [Op.eq]: req.body.id } }
+        });
+
+        res.status(200).json({
+            status: 200,
+            msg: 'Company deleted',
+        });
+    } catch (e) {
+        console.log('Error: ', e.parent.sqlMessage);
+        res.status(409).send('DB Failed');//, e);
+    }
+});
+
+router.get('/cities-list', async (req, res) => {
+    try{
+        const citiesList = await City.findAll({
+        });
+        res.status(200).json({
+            status: 200,
+            msg: 'City list',
+            list: citiesList
+        });
+    } catch (e) {
+        console.log('Error: ', e.parent.sqlMessage);
+        res.status(409).send('DB Failed');//, e);
+    }
+});
+
 module.exports = router;
