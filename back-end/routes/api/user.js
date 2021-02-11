@@ -214,29 +214,26 @@ router.post('/create-company', async (req, res) => {
         company.phone = req.body.phone;
         company.city_id = req.body.city_id;
 
-        console.log(company);
-
         await Company.create(company);
 
         res.status(201).json({
             status: 201,
             msg: 'New company created!'
         });
-    } catch (e) { // username: [unique: true] email: [unique: true]
+    } catch (e) { // name: [unique: true]
         console.log('Error: ', e.errors[0].message);
-
-    //     if (e.errors[0].type == 'unique violation') {
-    //         res.status(401).json({
-    //             status: 401,
-    //             msg: e.errors[0].message
-    //         });
-    //     } else {
-    //         res.status(409).json({
-    //             status: 409,
-    //             msg: 'Username or email has already exist',
-    //             error: e
-    //         });
-    //     }
+        if (e.errors[0].type == 'unique violation') {
+            res.status(401).json({
+                status: 401,
+                msg: e.errors[0].message
+            });
+        } else {
+            res.status(409).json({
+                status: 409,
+                msg: 'Company has already exist',
+                error: e
+            });
+        }
     }
 });
 
@@ -250,7 +247,7 @@ router.post('/companies-list', async (req, res) => {
                     include: {
                         model: Country,
                         attributes: ['country'],
-                    } 
+                    }
                 }
             ]
         });
@@ -282,7 +279,7 @@ router.delete('/delete-company', async (req, res) => {
 });
 
 router.get('/cities-list', async (req, res) => {
-    try{
+    try {
         const citiesList = await City.findAll({
         });
         res.status(200).json({
@@ -293,6 +290,59 @@ router.get('/cities-list', async (req, res) => {
     } catch (e) {
         console.log('Error: ', e.parent.sqlMessage);
         res.status(409).send('DB Failed');//, e);
+    }
+});
+
+router.post('/get-company', async (req, res) => {
+    try {
+        const companyValues = await Company.findAll({
+            where: { company_id: { [Op.eq]: req.body.id } },
+            include: [{
+                model: City,
+                attributes: ['city'],
+            }]
+        });
+
+        res.status(200).json({
+            company: companyValues[0].dataValues,
+            status: 200
+        });
+    } catch (e) {
+        console.log('Error: ', e.parent.sqlMessage);
+        res.status(409).send('DB Failed');//, e);
+    }
+});
+
+router.post('/edit-company', async (req, res) => {
+    try {
+        await Company.update({
+                name: req.body.name,
+                address: req.body.address,
+                email: req.body.email,
+                phone: req.body.phone,
+                city_id: req.body.city_id,
+            },
+            { where: { company_id: req.body.id }
+            });
+        res.status(200).json({
+            status: 200,
+            msg: 'User edited!'
+        });
+    } catch (e) { // username: [unique: true] email: [unique: true]
+        console.log('Error: ', e.errors[0].message);
+
+        if (e.errors[0].type == 'unique violation') {
+            res.status(401).json({
+                status: 401,
+                msg: e.errors[0].message
+            });
+        } else {
+            res.status(409).json({
+                status: 409,
+                msg: 'Username or email has already exist',
+                error: e
+            });
+        }
     }
 });
 

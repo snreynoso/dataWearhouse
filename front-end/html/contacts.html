@@ -25,10 +25,10 @@
 
             <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <a class="nav-link active" aria-current="page" href="#">Contactos</a>
-                    <a class="nav-link" href="/front-end/html/companies.html">Compañias</a>
-                    <a class="nav-link" href="/front-end/html/users.html" id="userHeaderBtn">Usuarios</a>
-                    <a class="nav-link" href="/front-end/html/city-region.html">Región/Ciudad</a>
+                    <a class="btn btn-primary" aria-current="page" href="#">Contactos</a>
+                    <a class="btn" href="/front-end/html/companies.html">Compañias</a>
+                    <a class="btn" href="/front-end/html/users.html" id="userHeaderBtn">Usuarios</a>
+                    <a class="btn" href="/front-end/html/city-region.html">Región/Ciudad</a>
                 </div>
             </div>
         </div>
@@ -39,13 +39,102 @@
             userHeaderBtn.style.display = 'none';
         }
     </script>
-    
-    <div>
-        <h1>CONTACTOS</h1>
+
+    <div class="container border p-3 mt-4">
+        <h4 class="text-left">Contactos</h4>
+        <div class="container">
+            <div class="d-flex bd-highlight mb-2">
+                <div class="p-2 bd-highlight col-8">
+                    <div class="input-group">
+                        <input type="text" class="form-control" aria-label="Text input with segmented dropdown button">
+                        <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split"
+                            data-bs-toggle="collapse" data-bs-target="#collapseForm"></button>
+                    </div>
+                    <div class="container border collapse" id="collapseForm">
+                        <div class="" role="menu" id="menu">
+                            <form class="form-horizontal">
+                                <div class="row mb-3 m-1">
+                                    <label for="findContactName" class="col-sm-3 col-form-label">Nombre</label>
+                                    <div class="col-sm-8">
+                                        <input type="email" class="form-control" id="findContactName">
+                                    </div>
+                                </div>
+                                <div class="row mb-3 m-1">
+                                    <label for="findContactCargo" class="col-sm-3 col-form-label">Cargo</label>
+                                    <div class="col-sm-8">
+                                        <input type="email" class="form-control" id="findContactCargo">
+                                    </div>
+                                </div>
+                                <div class="row mb-3 m-1">
+                                    <label for="findContactCountry" class="col-sm-3 col-form-label">Pais</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-select " aria-label=".form-select-lg example"
+                                            id="findContactCountry" name="city" required>
+                                            <option selected>...</option>
+                                            <option value="1">One</option>
+                                            <option value="2">Two</option>
+                                            <option value="3">Three</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row mb-3 m-1">
+                                    <label for="findContactCompany" class="col-sm-3 col-form-label">Compañia</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-select " aria-label=".form-select-lg example"
+                                            id="findContactCompany" name="city" required>
+                                            <option selected>...</option>
+                                            <option value="1">One</option>
+                                            <option value="2">Two</option>
+                                            <option value="3">Three</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row mb-3 m-1">
+                                    <label for="findContactChanel" class="col-sm-3 col-form-label">Canal
+                                        Favorito</label>
+                                        <div class="col-sm-8">
+                                            <select class="form-select " aria-label=".form-select-lg example"
+                                                id="findContactChanel" name="city" required>
+                                                <option selected>...</option>
+                                                <option value="1">One</option>
+                                                <option value="2">Two</option>
+                                                <option value="3">Three</option>
+                                            </select>
+                                        </div>
+                                </div>
+                                <div class="row mb-3 m-1">
+                                    <label for="findContactInteres" class="col-sm-3 col-form-label">Interes</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-select" aria-label=".form-select-lg example"
+                                            id="findContactInteres" name="city" required>
+                                            <option selected>...</option>
+                                            <option value="1">One</option>
+                                            <option value="2">Two</option>
+                                            <option value="3">Three</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pb-2 pt-2 bd-highlight">
+                    <button type="button" class="btn btn-primary justify-content-end">Buscar</button>
+                </div>
+                <div class="ms-auto p-2 bd-highlight">
+                    <button type="button" class="btn btn-primary justify-content-end">Crear Contacto</button>
+                </div>
+            </div>
+        </div>
     </div>
+
+
+
 
     <script src="/front-end/css/dist/js/bootstrap.bundle.min.js"></script>
     <script type="module" src="/front-end/js/contacts.js"></script>
+
 </body>
 
 </html>

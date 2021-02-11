@@ -66,8 +66,8 @@ function deleteCompany(companyNumber) {
         .then(res => res.json())
         .then(data => {
             if (data.status == 200) {
-                alert('La compañia ha sido borrado correctamente');
                 window.location.href = './companies.html';
+                alert('La compañia ha sido borrado correctamente');
             } else if (data.status == 401) {
                 alert(data.msg);
             } 
