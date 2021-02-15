@@ -46,71 +46,66 @@
             <div class="d-flex bd-highlight mb-2">
                 <div class="p-2 bd-highlight col-8">
                     <div class="input-group">
-                        <input type="text" class="form-control" aria-label="Text input with segmented dropdown button">
+                        <input type="text" class="form-control" placeholder="Nombre"
+                            aria-label="Text input with segmented dropdown button" id="name" required>
                         <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split"
                             data-bs-toggle="collapse" data-bs-target="#collapseForm"></button>
                     </div>
                     <div class="container border collapse" id="collapseForm">
                         <div class="" role="menu" id="menu">
                             <form class="form-horizontal">
-                                <div class="row mb-3 m-1">
-                                    <label for="findContactName" class="col-sm-3 col-form-label">Nombre</label>
+                                <div class="row mb-3 mt-3 m-1">
+                                    <!-- <label for="findName" class="col-sm-3 col-form-label">Nombre</label>
                                     <div class="col-sm-8">
-                                        <input type="email" class="form-control" id="findContactName">
+                                        <input type="email" class="form-control" id="findName">
+                                    </div>
+                                </div>
+                                <div class="row mb-3 m-1"> -->
+                                    <label for="findCargo" class="col-sm-3 col-form-label">Cargo</label>
+                                    <div class="col-sm-8">
+                                        <input type="email" class="form-control" id="findCargo">
                                     </div>
                                 </div>
                                 <div class="row mb-3 m-1">
-                                    <label for="findContactCargo" class="col-sm-3 col-form-label">Cargo</label>
-                                    <div class="col-sm-8">
-                                        <input type="email" class="form-control" id="findContactCargo">
-                                    </div>
-                                </div>
-                                <div class="row mb-3 m-1">
-                                    <label for="findContactCountry" class="col-sm-3 col-form-label">Pais</label>
+                                    <label for="findCountry" class="col-sm-3 col-form-label">Pais</label>
                                     <div class="col-sm-8">
                                         <select class="form-select " aria-label=".form-select-lg example"
-                                            id="findContactCountry" name="city" required>
-                                            <option selected>...</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
+                                            id="findCountry" name="country">
                                         </select>
                                     </div>
                                 </div>
                                 <div class="row mb-3 m-1">
-                                    <label for="findContactCompany" class="col-sm-3 col-form-label">Compañia</label>
+                                    <label for="findCompany" class="col-sm-3 col-form-label">Compañia</label>
                                     <div class="col-sm-8">
                                         <select class="form-select " aria-label=".form-select-lg example"
-                                            id="findContactCompany" name="city" required>
-                                            <option selected>...</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
+                                            id="findCompany" name="company">
                                         </select>
                                     </div>
                                 </div>
                                 <div class="row mb-3 m-1">
-                                    <label for="findContactChanel" class="col-sm-3 col-form-label">Canal
+                                    <label for="findChanel" class="col-sm-3 col-form-label">Canal
                                         Favorito</label>
-                                        <div class="col-sm-8">
-                                            <select class="form-select " aria-label=".form-select-lg example"
-                                                id="findContactChanel" name="city" required>
-                                                <option selected>...</option>
-                                                <option value="1">One</option>
-                                                <option value="2">Two</option>
-                                                <option value="3">Three</option>
-                                            </select>
-                                        </div>
+                                    <div class="col-sm-8">
+                                        <select class="form-select " aria-label=".form-select-lg example"
+                                            id="findChanel" name="chanel">
+                                            <option selected>...</option>
+                                            <option value="whatsapp">Whatsapp</option>
+                                            <option value="instagram">Instagram</option>
+                                            <option value="facebook">Facebook</option>
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="row mb-3 m-1">
-                                    <label for="findContactInteres" class="col-sm-3 col-form-label">Interes</label>
+                                    <label for="findInteres" class="col-sm-3 col-form-label">Interes</label>
                                     <div class="col-sm-8">
                                         <select class="form-select" aria-label=".form-select-lg example"
-                                            id="findContactInteres" name="city" required>
+                                            id="findInteres" name="interes">
                                             <option selected>...</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
+                                            <option value="0">0%</option>
+                                            <option value="25">25%</option>
+                                            <option value="50">50%</option>
+                                            <option value="75">75%</option>
+                                            <option value="100">100%</option>
                                         </select>
                                     </div>
                                 </div>
@@ -120,17 +115,43 @@
                 </div>
 
                 <div class="pb-2 pt-2 bd-highlight">
-                    <button type="button" class="btn btn-primary justify-content-end">Buscar</button>
+                    <button type="button" class="btn btn-primary justify-content-end" id="btnSearch">Buscar</button>
                 </div>
                 <div class="ms-auto p-2 bd-highlight">
-                    <button type="button" class="btn btn-primary justify-content-end">Crear Contacto</button>
+                    <a class="btn btn-primary justify-content-end" href="/front-end/html/create-contact.html">Crear
+                        Contacto</a>
                 </div>
             </div>
         </div>
     </div>
 
+    <div class="container border p-2">
+        <div class="d-flex flex-row justify-content-between">
+            <div class="btn btn-primary"># Contactos Selecionados</div>
+            <div class="btn btn-danger">Eliminar Seleccionados</div>
+        </div>
 
+        <table class="table table- border">
+            <thead>
+                <tr>
+                    <th scope="col">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="checkAllContacts">
+                        </div>
+                    </th>
+                    <th scope="col" class="text-center">Contacto</th>
+                    <th scope="col" class="text-center">País</th>
+                    <th scope="col" class="text-center">Compañia</th>
+                    <th scope="col" class="text-center">Cargo</th>
+                    <th scope="col" class="text-center">Interes</th>
+                    <th scope="col" class="text-center">Acciones</th>
+                </tr>
+            </thead>
 
+            <tbody id="companyTable">
+            </tbody>
+        </table>
+    </div>
 
     <script src="/front-end/css/dist/js/bootstrap.bundle.min.js"></script>
     <script type="module" src="/front-end/js/contacts.js"></script>

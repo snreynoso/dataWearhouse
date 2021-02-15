@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DataWarehouse</title>
+    <link rel="stylesheet" href="/front-end/css/dist/css/custom.css">
+    <link rel="shortcut icon" type="image/png" href="/front-end/html/img/logo-w.png">
+</head>
+
+<body>
+
+    <script>
+        if (sessionStorage.token == null) {
+            window.location.href = './index.html';
+        }
+    </script>
+
+    <nav class="navbar navbar-expand navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand p-2" href="#">
+                <img src="/front-end/html/img/logo-w.png" width="45" height="45" alt="" loading="lazy">
+            </a>
+
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="btn btn-primary" aria-current="page" href="/front-end/html/contacts.html">Contactos</a>
+                    <a class="btn" href="/front-end/html/companies.html">Compañias</a>
+                    <a class="btn" href="/front-end/html/users.html" id="userHeaderBtn">Usuarios</a>
+                    <a class="btn" href="/front-end/html/city-region.html">Región/Ciudad</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <script>
+        if (sessionStorage.role != 'admin') {
+            userHeaderBtn.style.display = 'none';
+        }
+    </script>
+
+    <div class="container border p-3 mt-4">
+        <h4 class="text-center">Crear Contacto</h4>
+
+        <form id="createContactForm">
+            <div class="contaier d-flex flex-column align-items-center">
+
+                <div class="row container p-2 pb-4 bg-light text-white">
+                    <div class="col">
+                        <label for="newContactName">Name</label>
+                        <input type="text" class="form-control" id="newContactName" required>
+                    </div>
+                    <div class="col">
+                        <label for="newContactSurname">Apellido</label>
+                        <input type="text" class="form-control" id="newContactSurname" required>
+                    </div>
+                    <div class="col">
+                        <label for="newContactCharge">Cargo</label>
+                        <input type="text" class="form-control" id="newContactCharge" required>
+                    </div>
+                    <div class="col">
+                        <label for="newContactEmail">Email</label>
+                        <input type="text" class="form-control" id="newContactEmail" required>
+                    </div>
+                    <div class="col">
+                        <label for="newContactCompany">Company</label>
+                        <select class="form-select" aria-label=".form-select-lg example" id="newContactCompany"
+                            name="company" required>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="container border p-2">
+                    <div class="row mb-2">
+                        <div class="col">
+                            <label for="newContactRegion">Company</label>
+                            <select class="form-select" aria-label=".form-select-lg example" id="newContactRegion"
+                                name="region" required>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label for="newContactCountry">Pais</label>
+                            <select class="form-select" aria-label=".form-select-lg example" id="newContactCountry"
+                                name="country" required>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label for="newContactCity">Ciudad</label>
+                            <select class="form-select" aria-label=".form-select-lg example" id="newContactCity"
+                                name="city" required>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label for="newContactAddress">Direccion</label>
+                            <input type="text" class="form-control" id="newContactAddress" required>
+                        </div>
+                        <div class="col">
+                            <label for="newContactInteres">Interes</label>
+                            <select class="form-select" aria-label=".form-select-lg example" id="newContactInteres"
+                                name="interes" required>
+                                <option selected>...</option>
+                                <option value="0">0%</option>
+                                <option value="25">25%</option>
+                                <option value="50">50%</option>
+                                <option value="75">75%</option>
+                                <option value="100">100%</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Canal de Contacto</th>
+                                <th scope="col">Cuenta de Usuario</th>
+                                <th scope="col">Preferencias</th>
+                                <th scope="col">Activar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Whatsapp</td>
+                                <td><input type="text"></td>
+                                <td><select class="form-select p-0" aria-label=".form-select-lg example"
+                                        id="newContactChannelWAPref" name="userCountWAPref" required>
+                                        <option selected>...</option>
+                                        <option value="0">Sin preferncias</option>
+                                        <option value="25">Canal favorito</option>
+                                        <option value="50">No molestar</option>
+                                    </select></td>
+                                <td><input type="checkbox" class="custom-control-input" name="whatsapp"
+                                        id="newContactChannelWA"></td>
+                            </tr>
+                            <tr>
+                                <td>Instagram</td>
+                                <td><input type="text"></td>
+                                <td><select class="form-select p-0" aria-label=".form-select-lg example"
+                                        id="newContactChannelINPref" name="userCountINPref" required>
+                                        <option selected>...</option>
+                                        <option value="0">Sin preferncias</option>
+                                        <option value="25">Canal favorito</option>
+                                        <option value="50">No molestar</option>
+                                    </select></td>
+                                <td><input type="checkbox" class="custom-control-input" name="instagram"
+                                        id="newContactChannelIN"></td>
+                            </tr>
+                            <tr>
+                                <td>Facebook</td>
+                                <td><input type="text"></td>
+                                <td><select class="form-select p-0" aria-label=".form-select-lg example"
+                                        id="newContactChannelFBPref" name="userCountFBPref" required>
+                                        <option selected>...</option>
+                                        <option value="0">Sin preferncias</option>
+                                        <option value="25">Canal favorito</option>
+                                        <option value="50">No molestar</option>
+                                    </select></td>
+                                <td><input type="checkbox" class="custom-control-input" name="facebook"
+                                        id="newContactChannelFB"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script src="/front-end/css/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="/front-end/js/create-contact.js"></script>
+
+</body>
+
+</html>

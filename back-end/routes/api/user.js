@@ -346,4 +346,19 @@ router.post('/edit-company', async (req, res) => {
     }
 });
 
+router.get('/db-lists', async (req, res) => {
+    try {
+        const get_country_list = await Country.findAll();
+        const get_companies_list = await Company.findAll();
+        res.status(200).json({
+            status: 200,
+            msg: 'Company list',
+            countryList: get_country_list,
+            companyList: get_companies_list
+        });
+    } catch (e) {
+        console.log('Error: ', e.parent.sqlMessage);
+        res.status(409).send('DB Failed');//, e);
+    }
+});
 module.exports = router;
