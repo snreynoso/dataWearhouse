@@ -40,10 +40,10 @@ function printLocationList(locations) {
         <div class="container border p-2 d-flex flex-row align-items-center justify-content-between" style="background-color:#c6c9cf;">
             <div class="d-flex flex-row align-items-center">
                 <h3 class="d-inline">${element.region}</h3>
-                <button type="submit" class="btn btn-secondary m-2 edi_reg" id="${element.region_id}">Editar</button>
-                <button type="submit" class="btn btn-danger m-2 del_reg" id="${element.region_id}">Eliminar</button>
+                <button type="submit" class="btn btn-secondary m-2 edi_reg" id="${element.id}">Editar</button>
+                <button type="submit" class="btn btn-danger m-2 del_reg" id="${element.id}">Eliminar</button>
             </div>
-            <button type="submit" class="btn btn-primary m-2 con" id="${element.region_id}">Agregar país</button>
+            <button type="submit" class="btn btn-primary m-2 con" id="${element.id}">Agregar país</button>
         </div>
         
         <div class="border" id="${element.region}">
@@ -58,10 +58,10 @@ function printLocationList(locations) {
             <div class="d-flex flex-row align-items-center justify-content-between" style="background-color: #e8ebf1;">
                 <div class="d-flex flex-row align-items-center">
                     <h4 class="d-inline m-2">${element.countries[index].country}</h4>
-                    <button type="submit" class="btn btn-secondary m-2 edi_con" id="${element.countries[index].country_id}">Editar</button>
-                    <button type="submit" class="btn btn-danger m-2 del_con" id="${element.countries[index].country_id}">Eliminar</button>
+                    <button type="submit" class="btn btn-secondary m-2 edi_con" id="${element.countries[index].id}">Editar</button>
+                    <button type="submit" class="btn btn-danger m-2 del_con" id="${element.countries[index].id}">Eliminar</button>
                 </div>
-                <button type="submit" class="btn btn-primary m-2 cit" id="${element.countries[index].country_id}">Agregar ciudad</button>
+                <button type="submit" class="btn btn-primary m-2 cit" id="${element.countries[index].id}">Agregar ciudad</button>
             </div>
 
             <div class="border" id="${element.countries[index].country}">
@@ -72,16 +72,17 @@ function printLocationList(locations) {
             let n_cities = element.countries[index].cities.length;
             let cities_div = document.getElementById(country);
 
-            for (let index_2 = 0; index_2 < n_cities; index_2++) {
+            
 
-                let city_id = element.countries[index].cities[index_2].city_id;
+            for (let index_2 = 0; index_2 < n_cities; index_2++) {
+                let id = element.countries[index].cities[index_2].id;
 
                 cities_div.innerHTML += `
                 <div class="d-flex flex-row justify-content-between ms-4">
                     <div class="d-flex flex-row align-items-center">
                         <h5 class="d-inline m-2">${element.countries[index].cities[index_2].city}</h5>
-                        <button type="submit" class="btn btn-secondary m-2 edi_cit" id="${city_id}">Editar</button>
-                        <button type="submit" class="btn btn-danger m-2 del_cit" id="${city_id}">Eliminar</button>
+                        <button type="submit" class="btn btn-secondary m-2 edi_cit" id="${id}">Editar</button>
+                        <button type="submit" class="btn btn-danger m-2 del_cit" id="${id}">Eliminar</button>
                     </div>
                 </div>
                 `;
@@ -94,6 +95,7 @@ fetch(urlGetList, getOptions)
     .then(res => res.json())
     .then(data => {
         if (data.status == 200) {
+            //console.log(data)
             printLocationList(data.list);
             // BOTON AGREGAR PAIS   
             document.querySelectorAll('.con').forEach(element => {

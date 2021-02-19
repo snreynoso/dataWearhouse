@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
     return sequelize.define('company', {
-        company_id: {
+        id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true,
@@ -8,12 +8,12 @@ module.exports = (sequelize, DataTypes) => {
         },
         name: {
             type: DataTypes.STRING,
-            unique: 'name'
+            //unique: 'name'
         },
         address: DataTypes.STRING,
         email: DataTypes.STRING,
         phone: DataTypes.STRING,
-        city_id: DataTypes.INTEGER
+        //city_id: DataTypes.INTEGER
     },
         {
             timestamps: false

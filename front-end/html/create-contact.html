@@ -48,7 +48,7 @@
 
                 <div class="row container p-2 pb-4 bg-light text-white">
                     <div class="col">
-                        <label for="newContactName">Name</label>
+                        <label for="newContactName">Nombre</label>
                         <input type="text" class="form-control" id="newContactName" required>
                     </div>
                     <div class="col">
@@ -64,7 +64,7 @@
                         <input type="text" class="form-control" id="newContactEmail" required>
                     </div>
                     <div class="col">
-                        <label for="newContactCompany">Company</label>
+                        <label for="newContactCompany">Compañia</label>
                         <select class="form-select" aria-label=".form-select-lg example" id="newContactCompany"
                             name="company" required>
                         </select>
@@ -74,7 +74,7 @@
                 <div class="container border p-2">
                     <div class="row mb-2">
                         <div class="col">
-                            <label for="newContactRegion">Company</label>
+                            <label for="newContactRegion">Región</label>
                             <select class="form-select" aria-label=".form-select-lg example" id="newContactRegion"
                                 name="region" required>
                             </select>
@@ -82,13 +82,13 @@
                         <div class="col">
                             <label for="newContactCountry">Pais</label>
                             <select class="form-select" aria-label=".form-select-lg example" id="newContactCountry"
-                                name="country" required>
+                                name="country" required disabled>
                             </select>
                         </div>
                         <div class="col">
                             <label for="newContactCity">Ciudad</label>
                             <select class="form-select" aria-label=".form-select-lg example" id="newContactCity"
-                                name="city" required>
+                                name="city" required disabled>
                             </select>
                         </div>
                         <div class="col">
@@ -163,6 +163,10 @@
                 </div>
             </div>
         </form>
+
+        <div class="d-grid justify-content-end">
+            <button type="submit" class="btn btn-primary mt-2 mr-2 justify-content-end">Crear</button>
+        </div>
     </div>
 
     <script src="/front-end/css/dist/js/bootstrap.bundle.min.js"></script>

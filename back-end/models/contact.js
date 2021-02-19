@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
     return sequelize.define('contact', {
-        contact_id: {
+        id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true,
@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
         surname: DataTypes.STRING,
         charge: DataTypes.STRING,
         email: DataTypes.STRING,
-        company_id: DataTypes.STRING,
+        //company_id: DataTypes.STRING,
     },
         {
             timestamps: false

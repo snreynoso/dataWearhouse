@@ -1,7 +1,7 @@
 import { checkToken } from './common-functions.js';
 checkToken(sessionStorage);
 
-const urlCreateCompany = 'http://localhost:3000/api/user/companies-list';
+const urlGetCompaniesList = 'http://localhost:3000/api/user/companies-list';
 const urlDeleteCompany = 'http://localhost:3000/api/user/delete-company';
 
 // FETCH HEADER //
@@ -35,7 +35,10 @@ function printCompaniesList(list) {
                     <th scope="col">#</th>
                     <th scope="col">Nombre</th>
                     <th scope="col">País</th>
+                    <th scope="col">Ciudad</th>
                     <th scope="col">Dirección</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Telefono</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -44,19 +47,25 @@ function printCompaniesList(list) {
         </table>`;
 
     const companyTable = document.querySelector('#companyTable');
+
     for (let index = 0; index < list.length; index++) {
+        //for(let index_2 = 0; index_2 < list[index].cities.length; index_2++) {
         companyTable.innerHTML +=
             `<th scope="row" class="align-middle">${index + 1}</th>
                         <td class="align-middle">${list[index].name}</td>
                         <td class="align-middle">${list[index].city.country.country}</td>
+                        <td class="align-middle">${list[index].city.city}</td>
                         <td class="align-middle">${list[index].address}</td>
+                        <td class="align-middle">${list[index].email}</td>
+                        <td class="align-middle">${list[index].phone}</td>
                         <td>
                             <div class="d-flex justify-content-end"> 
-                                <a class="btn btn-secondary m-1" id="${list[index].company_id}">Editar</a>
-                                <a class="btn btn-danger m-1" id="${list[index].company_id}">Eliminar</a>
+                                <a class="btn btn-secondary m-1" id="${list[index].id}">Editar</a>
+                                <a class="btn btn-danger m-1" id="${list[index].id}">Eliminar</a>
                             </div>
                         </td>
                     </tr>`
+        //}
     }
 }
 
@@ -84,7 +93,7 @@ function deleteCompany(companyNumber) {
         });
 }
 
-fetchServer(urlCreateCompany, postOptions)
+fetchServer(urlGetCompaniesList, postOptions)
     .then(res => res.json())
     .then(data => {
         if (data.status == 200) {

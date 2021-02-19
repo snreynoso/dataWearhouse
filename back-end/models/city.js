@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
     return sequelize.define('city', {
-        city_id: {
+        id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true,
@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             unique: 'city'
         },
-        country_id: DataTypes.INTEGER
+        //country_id: DataTypes.INTEGER
     },
         {
             timestamps: false

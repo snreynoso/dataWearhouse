@@ -29,7 +29,7 @@ fetch(urlGetCitiesList, getOptions)
             let select_element = document.querySelector('#create-city')
             select_element.innerHTML = `<option selected>...</option>`;
             data.list.forEach(element => {
-                select_element.innerHTML += `<option value="${element.city_id}">${element.city}</option>`
+                select_element.innerHTML += `<option value="${element.id}">${element.city}</option>`
             });
         } else if (data.status == 401) {
             alert(data.msg);

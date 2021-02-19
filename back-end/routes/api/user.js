@@ -70,8 +70,6 @@ router.post('/create-city', async (req, res) => {
     city.city = req.body.city;
     city.country_id = req.body.country_id;
 
-    console.log(city)
-
     await City.create(city);
 
     res.status(200).json({
@@ -85,10 +83,10 @@ router.get('/get-list', async (req, res) => {
         const allRegionsCities = await Region.findAll({
             include: [{
                 model: Country,
-                attributes: ['country_id', 'country'],
+                attributes: ['id', 'country'],
                 include: {
                     model: City,
-                    attributes: ['city_id', 'city']
+                    attributes: ['id', 'city']
                 }
             }]
         });
@@ -106,7 +104,7 @@ router.get('/get-list', async (req, res) => {
 router.delete('/delete-region', async (req, res) => {
     try {
         await Region.destroy({
-            where: { region_id: { [Op.eq]: req.body.id } }
+            where: { id: { [Op.eq]: req.body.id } }
         });
         res.status(200).json({
             status: 200,
@@ -121,7 +119,7 @@ router.delete('/delete-region', async (req, res) => {
 router.delete('/delete-country', async (req, res) => {
     try {
         await Country.destroy({
-            where: { country_id: { [Op.eq]: req.body.id } }
+            where: { id: { [Op.eq]: req.body.id } }
         });
         res.status(200).json({
             status: 200,
@@ -136,7 +134,7 @@ router.delete('/delete-country', async (req, res) => {
 router.delete('/delete-city', async (req, res) => {
     try {
         await City.destroy({
-            where: { city_id: { [Op.eq]: req.body.id } }
+            where: { id: { [Op.eq]: req.body.id } }
         });
         res.status(200).json({
             status: 200,
@@ -155,7 +153,7 @@ router.post('/edit-region', async (req, res) => {
                 region: req.body.new_name
             },
             {
-                where: { region_id: { [Op.eq]: req.body.id } }
+                where: { id: { [Op.eq]: req.body.id } }
             });
         res.status(200).json({
             status: 200,
@@ -174,7 +172,7 @@ router.post('/edit-country', async (req, res) => {
                 country: req.body.new_name
             },
             {
-                where: { country_id: { [Op.eq]: req.body.id } }
+                where: { id: { [Op.eq]: req.body.id } }
             });
         res.status(200).json({
             status: 200,
@@ -193,7 +191,7 @@ router.post('/edit-city', async (req, res) => {
                 city: req.body.new_name
             },
             {
-                where: { city_id: { [Op.eq]: req.body.id } }
+                where: { id: { [Op.eq]: req.body.id } }
             });
         res.status(200).json({
             status: 200,
@@ -207,6 +205,7 @@ router.post('/edit-city', async (req, res) => {
 
 router.post('/create-company', async (req, res) => {
     try {
+        console.log(req.body)
         let company = new Object;
         company.name = req.body.name;
         company.address = req.body.address;
@@ -240,24 +239,52 @@ router.post('/create-company', async (req, res) => {
 router.post('/companies-list', async (req, res) => {
     try {
         const get_companies_list = await Company.findAll({
-            include: [
-                {
-                    model: City,
-                    attributes: ['city'],
+            include: [{
+                model: City,
+                attributes: ['city'],
+                include: {
+                    model: Country,
+                    attributes: ['country'],
                     include: {
-                        model: Country,
-                        attributes: ['country'],
+                        model: Region,
+                        attributes: ['region'],
+
                     }
                 }
-            ]
+            }]
         });
         res.status(200).json({
             status: 200,
             msg: 'Company list',
-            list: get_companies_list
+            list: get_companies_list,
         });
     } catch (e) {
-        console.log('Error: ', e.parent.sqlMessage);
+        console.log('Error: ', e);
+        res.status(409).send('DB Failed');//, e);
+    }
+});
+
+router.post('/companies-list&regions', async (req, res) => {
+    try {
+        const get_companies_list = await Company.findAll();
+        const get_regions_list = await Region.findAll({
+            include: [{
+                model: Country,
+                attributes: ['id', 'country'],
+                include: {
+                    model: City,
+                    attributes: ['id', 'city'],
+                }
+            }]
+        });
+        res.status(200).json({
+            status: 200,
+            msg: 'Company list',
+            companies: get_companies_list,
+            regions: get_regions_list
+        });
+    } catch (e) {
+        console.log('Error: ', e);
         res.status(409).send('DB Failed');//, e);
     }
 });
@@ -265,7 +292,7 @@ router.post('/companies-list', async (req, res) => {
 router.delete('/delete-company', async (req, res) => {
     try {
         await Company.destroy({
-            where: { company_id: { [Op.eq]: req.body.id } }
+            where: { id: { [Op.eq]: req.body.id } }
         });
 
         res.status(200).json({
@@ -296,7 +323,7 @@ router.get('/cities-list', async (req, res) => {
 router.post('/get-company', async (req, res) => {
     try {
         const companyValues = await Company.findAll({
-            where: { company_id: { [Op.eq]: req.body.id } },
+            where: { id: { [Op.eq]: req.body.id } },
             include: [{
                 model: City,
                 attributes: ['city'],
@@ -315,21 +342,23 @@ router.post('/get-company', async (req, res) => {
 
 router.post('/edit-company', async (req, res) => {
     try {
+        console.log(req.body)
         await Company.update({
-                name: req.body.name,
-                address: req.body.address,
-                email: req.body.email,
-                phone: req.body.phone,
-                city_id: req.body.city_id,
-            },
-            { where: { company_id: req.body.id }
+            name: req.body.name,
+            address: req.body.address,
+            email: req.body.email,
+            phone: req.body.phone,
+            city_id: req.body.city_id,
+        },
+            {
+                where: { id: req.body.id }
             });
         res.status(200).json({
             status: 200,
             msg: 'User edited!'
         });
     } catch (e) { // username: [unique: true] email: [unique: true]
-        console.log('Error: ', e.errors[0].message);
+        console.log('Error: ', e)//.errors[0].message);
 
         if (e.errors[0].type == 'unique violation') {
             res.status(401).json({

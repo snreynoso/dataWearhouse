@@ -12,7 +12,7 @@ const RegionModel = require('./models/region');
 const CountryModel = require('./models/country');
 const CityModel = require('./models/city');
 const CompanyModel = require('./models/company');
-const city = require('./models/city');
+const ContactModel = require('./models/contact');
 
 // CONECTING TO DB //
 const sequelize = new Sequelize(SQL_DATABASE, SQL_USER, SQL_PASS, {
@@ -26,57 +26,78 @@ const Region = RegionModel(sequelize, Sequelize);
 const Country = CountryModel(sequelize, Sequelize);
 const City = CityModel(sequelize, Sequelize);
 const Company = CompanyModel(sequelize, Sequelize);
+const Contact = ContactModel(sequelize, Sequelize);
 
 // TABLES ASSOCIATIONS //
-Region.hasMany(Country, {
-    foreignKey: {
-        name: 'region_id',
-        allowNull: false
-    },
-    sourceKey: 'region_id',
-    onDelete: 'CASCADE',
-    onUpdate: 'CASCADE'
-});
-
 Country.hasMany(City, {
-    foreignKey: {
-        name: 'country_id',
-        allowNull: false
-    },
-    sourceKey: 'country_id',
+    underscored: 'true',
+    foreignKey: 'country_id',
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE'
 });
 
-City.hasOne(Country, {
-    foreignKey: {
-        name: 'country_id',
-        allowNull: false
-    },
-    sourceKey: 'country_id',
+City.belongsTo(Country, {
+    underscored: 'true',
+    foreignKey: 'country_id',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
+});
+
+Region.hasMany(Country, {
+    underscored: 'true',
+    foreignKey: 'region_id',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
+});
+
+Country.belongsTo(Region, {
+    underscored: 'true',
+    foreignKey: 'region_id',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
+});
+
+Company.belongsTo(City, {
+    underscored: 'true',
+    foreignKey: 'city_id',
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE'
 });
 
 City.hasMany(Company, {
-    foreignKey: {
-        name: 'city_id',
-        allowNull: false
-    },
-    sourceKey: 'city_id',
+    underscored: 'true',
+    foreignKey: 'city_id',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
+})
+
+City.hasOne(Contact, {
+    underscored: 'true',
+    foreignKey: 'city_id',
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE'
 });
 
-Company.hasOne(City, {
-    foreignKey: {
-        name: 'city_id',
-        allowNull: false
-    },
-    sourceKey: 'city_id',
+Contact.belongsTo(City, {
+    underscored: 'true',
+    foreignKey: 'city_id',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
+})
+
+Company.hasOne(Contact, {
+    underscored: 'true',
+    foreignKey: 'company_id',
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE'
 });
+
+Contact.belongsTo(Company, {
+    underscored: 'true',
+    foreignKey: 'company_id',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
+})
 
 // SYNC DB //
 // sequelize.sync({ force: true })
@@ -90,5 +111,6 @@ module.exports = {
     Region,
     Country,
     City,
-    Company
+    Company,
+    Contact
 }
