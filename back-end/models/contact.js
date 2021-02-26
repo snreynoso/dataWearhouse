@@ -9,7 +9,14 @@ module.exports = (sequelize, DataTypes) => {
         name: DataTypes.STRING,
         surname: DataTypes.STRING,
         charge: DataTypes.STRING,
-        email: DataTypes.STRING,
+        address: DataTypes.STRING,
+        interes: DataTypes.STRING,
+        WAAccount: DataTypes.STRING,
+        WAPreference: DataTypes.STRING,
+        INAccount: DataTypes.STRING,
+        INPreference: DataTypes.STRING,
+        FBAccount: DataTypes.STRING,
+        FBPreference: DataTypes.STRING
         //company_id: DataTypes.STRING,
     },
         {

@@ -3,7 +3,7 @@ import { checkToken } from './common-functions.js';
 checkToken(sessionStorage);
 
 const urlGetCompaniesList = 'http://localhost:3000/api/user/companies-list&regions';
-//const urlGetCountryAndCitiesList = 'http://localhost:3000/api/user/country&cities-list';
+const urlCreateContact = 'http://localhost:3000/api/user/create-contact';
 
 
 const myHeaders = new Headers();
@@ -20,6 +20,12 @@ const getOptions = {
     method: 'GET',
     credentials: 'same-origin',
     //headers: myHeaders
+}
+
+async function fetchServer(url, options, jsonToSend) {
+    options['body'] = jsonToSend; // Add body: jsonToSend
+    const response = await fetch(url, options);
+    return response;
 }
 
 fetch(urlGetCompaniesList, postOptions)
@@ -109,3 +115,60 @@ fetch(urlGetCompaniesList, postOptions)
         alert('Error de conexion con el servidor');
     });
 
+document.querySelector('#createContactBtn').addEventListener('click', () => {
+    let contactData = new Object;
+
+    contactData.name = document.querySelector('#newContactName').value;
+    contactData.surname = document.querySelector('#newContactSurname').value;
+    contactData.charge = document.querySelector('#newContactCharge').value;
+    contactData.email = document.querySelector('#newContactEmail').value;
+    contactData.company_id = document.querySelector('#newContactCompany').value;
+    contactData.city_id = document.querySelector('#newContactCity').value;
+    contactData.address = document.querySelector('#newContactAddress').value;
+    contactData.interes = document.querySelector('#newContactInteres').value;
+
+    if (document.querySelector('#newContactChannelWA').checked) {
+        contactData.WAAccount = document.querySelector('#newWAUserAccount').value
+        contactData.WAPreference = document.querySelector('#newContactChannelWAPref').value
+    } else {
+        contactData.WAAccount = '';
+        contactData.WAPreference = '';
+    }
+    if (document.querySelector('#newContactChannelIN').checked) {
+        contactData.INAccount = document.querySelector('#newINUserAccount').value
+        contactData.INPreference = document.querySelector('#newContactChannelINPref').value
+    } else {
+        contactData.INAccount = '';
+        contactData.INPreference = '';
+    }
+    if (document.querySelector('#newContactChannelFB').checked) {
+        contactData.FBAccount = document.querySelector('#newFBUserAccount').value
+        contactData.FBPreference = document.querySelector('#newContactChannelFBPref').value
+    } else {
+        contactData.FBAccount = '';
+        contactData.FBPreference = '';
+    }
+
+    const jsonToSend = JSON.stringify(contactData);
+
+    console.log(jsonToSend);
+
+    fetchServer(urlCreateContact, postOptions, jsonToSend)
+        .then(res => res.json())
+        .then(data => {
+            if (data.status == 201) {
+                alert('El contacto ha sido creada correctamente');
+                window.location.href = './contacts.html';
+            } else if (data.status == 401) {
+                alert(data.msg);
+            } else if (data.status == 409) {
+                alert('Error con la conexion a la BD');
+            }
+        })
+        .catch(e => {
+            window.location.href = './index.html';
+            console.log('Failed to connect to the Database, ', e);
+            alert('Error de conexion con el servidor');
+        });
+
+});

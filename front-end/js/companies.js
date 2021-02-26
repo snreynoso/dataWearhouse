@@ -14,6 +14,7 @@ const postOptions = {
     credentials: 'same-origin',
     headers: myHeaders
 }
+
 const deleteOptions = {
     method: 'DELETE',
     credentials: 'same-origin',

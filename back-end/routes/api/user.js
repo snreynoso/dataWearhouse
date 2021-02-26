@@ -1,6 +1,6 @@
 require('dotenv').config();
 const router = require('express').Router();
-const { Region, Country, City, Company } = require('../../db');
+const { Region, Country, City, Company, Contact } = require('../../db');
 const { user_validation, authenticate_token } = require('./middlewares');
 const jwt = require('jsonwebtoken');
 const { Op } = require("sequelize");
@@ -205,7 +205,6 @@ router.post('/edit-city', async (req, res) => {
 
 router.post('/create-company', async (req, res) => {
     try {
-        console.log(req.body)
         let company = new Object;
         company.name = req.body.name;
         company.address = req.body.address;
@@ -342,7 +341,6 @@ router.post('/get-company', async (req, res) => {
 
 router.post('/edit-company', async (req, res) => {
     try {
-        console.log(req.body)
         await Company.update({
             name: req.body.name,
             address: req.body.address,
@@ -384,6 +382,68 @@ router.get('/db-lists', async (req, res) => {
             msg: 'Company list',
             countryList: get_country_list,
             companyList: get_companies_list
+        });
+    } catch (e) {
+        console.log('Error: ', e.parent.sqlMessage);
+        res.status(409).send('DB Failed');//, e);
+    }
+});
+
+router.post('/create-contact', async (req, res) => {
+    try {
+        
+        let newContact = req.body;
+        
+        await Contact.create(newContact);
+
+        res.status(201).json({
+            status: 201,
+            msg: 'New contact created!'
+        });
+    } catch (e) {
+        console.log('Error: ', e);
+        res.status(409).send('DB Failed');//, e);
+    }
+});
+
+router.get('/contact-list', async (req, res) => {
+    try {
+        const get_contact_list = await Contact.findAll({
+            include: 
+            [{
+                model: City,
+                attributes: ['id', 'city'],
+                include: {
+                    model: Country,
+                    attributes: ['id', 'country'],
+                }
+            },{
+                model: Company,
+                attributes: ['id', 'name']
+            }]
+        });
+
+        res.status(200).json({
+            status: 200,
+            msg: 'Company list',
+            contactsList: get_contact_list,
+        });
+    } catch (e) {
+        console.log('Error: ', e);//.parent.sqlMessage);
+        res.status(409).send('DB Failed');//, e);
+    }
+});
+
+router.delete('/delete-contact', async (req, res) => {
+    try {
+        console.log(req.body.id)
+        await Contact.destroy({
+            where: { id: req.body.id }
+        });
+
+        res.status(200).json({
+            status: 200,
+            msg: 'Contact deleted',
         });
     } catch (e) {
         console.log('Error: ', e.parent.sqlMessage);
