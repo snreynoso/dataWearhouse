@@ -32,31 +32,11 @@ fetch(urlGetCompaniesList, postOptions)
     .then(res => res.json())
     .then(data => {
         if (data.status == 200) {
-            // Fill Company Selct Element
-            //let elementBefore = '';
             let select_company = document.querySelector('#newContactCompany');
             select_company.innerHTML = `<option selected>...</option>`;
             data.companies.forEach(element => {
-                //if (element.name != elementBefore) { // Remove repetead companies
                 select_company.innerHTML += `<option value="${element.id}">${element.name}</option>`;
-                //}
-                //elementBefore = element.name;
             });
-            // Fill Region/Country/City Selects depending on Company Selected
-            // select_company.addEventListener('change', () => {
-            //     let companySelected = select_company.options[select_company.selectedIndex].text;
-
-            //     let select_region = document.querySelector('#newContactRegion');
-            //     select_region.innerHTML = `<option selected>...</option>`;
-
-            //     data.list.forEach(element => {
-            //         if (element.name === companySelected) { // && element.name != elementBefore) { // Find regions of Compnay selected and Remove repetead regions
-            //             console.log(element.city.country.region.region)
-            //             select_region.innerHTML += `<option value="${element.id}">${element.city.country.region.region}</option>`
-            //         }
-            //         //elementBefore = element.city.country.region.region;
-            //     });
-            // });
             let select_region = document.querySelector('#newContactRegion');
             let select_country = document.querySelector('#newContactCountry');
             let select_city = document.querySelector('#newContactCity');
@@ -151,13 +131,11 @@ document.querySelector('#createContactBtn').addEventListener('click', () => {
 
     const jsonToSend = JSON.stringify(contactData);
 
-    console.log(jsonToSend);
-
     fetchServer(urlCreateContact, postOptions, jsonToSend)
         .then(res => res.json())
         .then(data => {
             if (data.status == 201) {
-                alert('El contacto ha sido creada correctamente');
+                alert('El contacto ha sido creado correctamente');
                 window.location.href = './contacts.html';
             } else if (data.status == 401) {
                 alert(data.msg);
@@ -170,5 +148,4 @@ document.querySelector('#createContactBtn').addEventListener('click', () => {
             console.log('Failed to connect to the Database, ', e);
             alert('Error de conexion con el servidor');
         });
-
 });

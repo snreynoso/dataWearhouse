@@ -114,7 +114,7 @@ fetch(urlGetContactList, getOptions)
                                 
                     <td>
                         <div class="d-flex justify-content-center"> 
-                            <a class="btn btn-secondary m-1" id="${list[index].id}">Editar</a>
+                            <a class="btn btn-secondary m-1" name="editContactBtn" id="${list[index].id}">Editar</a>
                             <a class="btn btn-danger m-1" name="deleteContact" id="${list[index].id}">Eliminar</a>
                         </div>
                     </td>`
@@ -152,7 +152,7 @@ fetch(urlGetContactList, getOptions)
                     document.querySelector('#numberSelected').innerHTML = cont + ' Seleccionados';
                 });
             });
-
+            ////// DELETE CONTACTS //////
             let deleteContactBtn = document.querySelectorAll('[name="deleteContact"]');
             deleteContactBtn.forEach(element => {
                 element.addEventListener('click', event => {
@@ -171,6 +171,13 @@ fetch(urlGetContactList, getOptions)
                 });
                 if (confirm('Esta seguro que desea eliminar los contactos seleccionados?'))
                     deleteContact(contactsDelList);
+            });
+            ////// EDIT CONTACTS //////
+            document.querySelectorAll('[name="editContactBtn"]').forEach(element => {
+                element.addEventListener('click', event => {
+                    sessionStorage.editContactId = event.target.id;
+                    window.location.href = './edit-contact.html';
+                });
             });
 
         } else if (data.status == 401) {

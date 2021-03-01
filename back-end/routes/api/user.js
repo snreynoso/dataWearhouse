@@ -391,11 +391,8 @@ router.get('/db-lists', async (req, res) => {
 
 router.post('/create-contact', async (req, res) => {
     try {
-        
         let newContact = req.body;
-        
         await Contact.create(newContact);
-
         res.status(201).json({
             status: 201,
             msg: 'New contact created!'
@@ -409,18 +406,18 @@ router.post('/create-contact', async (req, res) => {
 router.get('/contact-list', async (req, res) => {
     try {
         const get_contact_list = await Contact.findAll({
-            include: 
-            [{
-                model: City,
-                attributes: ['id', 'city'],
-                include: {
-                    model: Country,
-                    attributes: ['id', 'country'],
-                }
-            },{
-                model: Company,
-                attributes: ['id', 'name']
-            }]
+            include:
+                [{
+                    model: City,
+                    attributes: ['id', 'city'],
+                    include: {
+                        model: Country,
+                        attributes: ['id', 'country'],
+                    }
+                }, {
+                    model: Company,
+                    attributes: ['id', 'name']
+                }]
         });
 
         res.status(200).json({
@@ -436,7 +433,6 @@ router.get('/contact-list', async (req, res) => {
 
 router.delete('/delete-contact', async (req, res) => {
     try {
-        console.log(req.body.id)
         await Contact.destroy({
             where: { id: req.body.id }
         });
@@ -450,4 +446,69 @@ router.delete('/delete-contact', async (req, res) => {
         res.status(409).send('DB Failed');//, e);
     }
 });
+
+router.post('/contact', async (req, res) => {
+    try {
+        const get_contact = await Contact.findAll({
+            where: { id: req.body.id },
+            include:
+                [{
+                    model: City,
+                    attributes: ['id', 'city'],
+                    include: {
+                        model: Country,
+                        attributes: ['id', 'country'],
+                        include: {
+                            model: Region,
+                            attributes: ['id', 'region'],
+                        }
+                    }
+                }, {
+                    model: Company,
+                    attributes: ['id', 'name']
+                }]
+        });
+        const get_companies_list = await Company.findAll();
+        const get_regions_list = await Region.findAll({
+            include: [{
+                model: Country,
+                attributes: ['id', 'country'],
+                include: {
+                    model: City,
+                    attributes: ['id', 'city'],
+                }
+            }]
+        });
+        res.status(200).json({
+            status: 200,
+            msg: 'Company list',
+            contact: get_contact,
+            companies: get_companies_list,
+            regions: get_regions_list
+        });
+    } catch (e) {
+        console.log('Error: ', e);//.parent.sqlMessage);
+        res.status(409).send('DB Failed');//, e);
+    }
+});
+
+router.post('/edit-contact', async (req, res) => {
+    try {
+        await Contact.update(req.body.contactData,
+            {
+                where: { id: req.body.id }
+            });
+        res.status(200).json({
+            status: 200,
+            msg: 'Contact edited!'
+        });
+    } catch (e) { // username: [unique: true] email: [unique: true]
+        console.log('Error: ', e)//.errors[0].message);
+        res.status(401).json({
+            status: 401,
+            msg: e.errors[0].message
+        });
+    }
+});
+
 module.exports = router;
