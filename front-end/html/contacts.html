@@ -47,7 +47,7 @@
                 <div class="p-2 bd-highlight col-8">
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="Nombre"
-                            aria-label="Text input with segmented dropdown button" id="name" required>
+                            aria-label="Text input with segmented dropdown button" id="findName" required>
                         <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split"
                             data-bs-toggle="collapse" data-bs-target="#collapseForm"></button>
                     </div>
@@ -55,22 +55,16 @@
                         <div class="" role="menu" id="menu">
                             <form class="form-horizontal">
                                 <div class="row mb-3 mt-3 m-1">
-                                    <!-- <label for="findName" class="col-sm-3 col-form-label">Nombre</label>
-                                    <div class="col-sm-8">
-                                        <input type="email" class="form-control" id="findName">
-                                    </div>
-                                </div>
-                                <div class="row mb-3 m-1"> -->
                                     <label for="findCargo" class="col-sm-3 col-form-label">Cargo</label>
                                     <div class="col-sm-8">
                                         <input type="email" class="form-control" id="findCargo">
                                     </div>
                                 </div>
                                 <div class="row mb-3 m-1">
-                                    <label for="findCountry" class="col-sm-3 col-form-label">Pais</label>
+                                    <label for="findCity" class="col-sm-3 col-form-label">Ciudad</label>
                                     <div class="col-sm-8">
                                         <select class="form-select " aria-label=".form-select-lg example"
-                                            id="findCountry" name="country">
+                                            id="findCity" name="country">
                                         </select>
                                     </div>
                                 </div>
@@ -83,24 +77,11 @@
                                     </div>
                                 </div>
                                 <div class="row mb-3 m-1">
-                                    <label for="findChanel" class="col-sm-3 col-form-label">Canal
-                                        Favorito</label>
-                                    <div class="col-sm-8">
-                                        <select class="form-select " aria-label=".form-select-lg example"
-                                            id="findChanel" name="chanel">
-                                            <option selected>...</option>
-                                            <option value="whatsapp">Whatsapp</option>
-                                            <option value="instagram">Instagram</option>
-                                            <option value="facebook">Facebook</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="row mb-3 m-1">
                                     <label for="findInteres" class="col-sm-3 col-form-label">Interes</label>
                                     <div class="col-sm-8">
                                         <select class="form-select" aria-label=".form-select-lg example"
                                             id="findInteres" name="interes">
-                                            <option selected>...</option>
+                                            <option selected value="">...</option>
                                             <option value="0">0%</option>
                                             <option value="25">25%</option>
                                             <option value="50">50%</option>

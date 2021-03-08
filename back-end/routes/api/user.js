@@ -375,12 +375,12 @@ router.post('/edit-company', async (req, res) => {
 
 router.get('/db-lists', async (req, res) => {
     try {
-        const get_country_list = await Country.findAll();
+        const get_city_list = await City.findAll();
         const get_companies_list = await Company.findAll();
         res.status(200).json({
             status: 200,
             msg: 'Company list',
-            countryList: get_country_list,
+            cityList: get_city_list,
             companyList: get_companies_list
         });
     } catch (e) {
@@ -501,6 +501,41 @@ router.post('/edit-contact', async (req, res) => {
         res.status(200).json({
             status: 200,
             msg: 'Contact edited!'
+        });
+    } catch (e) { // username: [unique: true] email: [unique: true]
+        console.log('Error: ', e)//.errors[0].message);
+        res.status(401).json({
+            status: 401,
+            msg: e.errors[0].message
+        });
+    }
+});
+
+router.post('/find-contact', async (req, res) => {
+    try {
+        let contactsFound = await Contact.findAll({
+            where: req.body,
+            include:
+                [{
+                    model: City,
+                    attributes: ['id', 'city'],
+                    include: {
+                        model: Country,
+                        attributes: ['id', 'country'],
+                        include: {
+                            model: Region,
+                            attributes: ['id', 'region'],
+                        }
+                    }
+                }, {
+                    model: Company,
+                    attributes: ['id', 'name']
+                }]
+        });
+        res.status(200).json({
+            status: 200,
+            msg: 'Contact found!',
+            contacts: contactsFound
         });
     } catch (e) { // username: [unique: true] email: [unique: true]
         console.log('Error: ', e)//.errors[0].message);

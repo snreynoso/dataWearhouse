@@ -100,11 +100,11 @@ Contact.belongsTo(Company, {
 })
 
 // SYNC DB //
-// sequelize.sync({ alter: true })
-//     .then(() => {
-//         console.log('The tables have been synchronized!');
-//     })
-//     .catch(e => console.log(e));
+sequelize.sync({ force: true })
+    .then(() => {
+        console.log('The tables have been synchronized!');
+    })
+    .catch(e => console.log(e));
 
 module.exports = {
     User,
